@@ -218,16 +218,16 @@ export default function App() {
   const gerarTextoRelatorio = () => {
     if (tipoDia === 'DOMINGO') {
       return (
-`🟢 **DOMINGO**
+`🟢 *DOMINGO*
 Data: ${dataRelatorio}
 
 Tribo de Judá
-🕚 **Horário:** 09h30 
-🤍 **Qt de novos:** ${totalNovosGeral}
-🤍 **Qt de afastados:** ${totalAfastadosGeral}
-🤍 **Qt de firmes:** ${totalFirmesGeral}
-🤍 **Qt de Obr:** ${qtdObreirosTotal}
-✅ **Qt total:** ${totalNovosGeral + totalAfastadosGeral + totalFirmesGeral + qtdObreirosTotal}
+🕚 Horário: 09h30 
+🤍 Qt de novos: ${totalNovosGeral}
+🤍 Qt de afastados: ${totalAfastadosGeral}
+🤍 Qt de firmes: ${totalFirmesGeral}
+🤍 Qt de Obr: ${qtdObreirosTotal}
+✅ Qt total: ${totalNovosGeral + totalAfastadosGeral + totalFirmesGeral + qtdObreirosTotal}
 
 🌐 **Qtde total o dia todo:** ${totalGeralTodosHorarios}
 
@@ -240,28 +240,28 @@ Tribo de Judá
       return (
 `Encontro jovem *${temaEncontro || 'tema'}*: 
 
-🔻 **Tribo de Judá** 
+🔻 *Tribo de Judá* 
 
-▫️ **Novos:** ${totalNovosGeral}
-▫️ **Afastados:** ${totalAfastadosGeral}
-▫️ **Retornando:** ${totalRetornando}
-▫️ **Firmes:** ${totalFirmesGeral}
-▫️ **Obreiros:** ${qtdObreirosTotal}
-▫️ **Ab. Interna:** ${abordagemInterna}
-▫️ **Ab. Externa:** ${abordagemExterna}
-▫️ **Total da tribo:** ${totalGeralTodosHorarios}
+▫️ *Novos:* ${totalNovosGeral}
+▫️ *Afastados:* ${totalAfastadosGeral}
+▫️ *Retornando:* ${totalRetornando}
+▫️ *Firmes:* ${totalFirmesGeral}
+▫️ *Obreiros:* ${qtdObreirosTotal}
+▫️ *Ab. Interna:* ${abordagemInterna}
+▫️ *Ab. Externa:* ${abordagemExterna}
+▫️ *Total da tribo:* ${totalGeralTodosHorarios}
 
-🔰 **Visitas da semana:** ${visitasSemana}
-🗣️ **A tribo realizou evg?** ${realizouEvg}
-📲 **Qt. de mensagens/ligações:** ${mensagensLigacoes}
-🪣 **Qt. de jovens na limpeza:** ${jovensLimpeza}
-🧹 **Qt. de produtos de limpeza trazidos na semana:** ${produtosLimpeza}
-🎞️ **Qt. de folhas ofício trazidas na semana:** ${folhasOficio}`
+🔰 *Visitas da semana:* ${visitasSemana}
+🗣️ *A tribo realizou evg?* ${realizouEvg}
+📲 *Qt. de mensagens/ligações:* ${mensagensLigacoes}
+🪣 *Qt. de jovens na limpeza:* ${jovensLimpeza}
+🧹 *Qt. de produtos de limpeza trazidos na semana:* ${produtosLimpeza}
+🎞️ *Qt. de folhas ofício trazidas na semana:* ${folhasOficio}`
       );
     }
     if (tipoDia === 'QUARTA') {
       return (
-`QUARTA-FEIRA / Escola da fé
+`QUARTA-FEIRA / Escola da fé 🤓🙏🏽
 Data: ${dataRelatorio}
 
 Tribo de Judá
@@ -280,12 +280,12 @@ Total de jovens em todos os horários: ${totalGeralTodosHorarios}`
       return (
 `ALGO A MAIS 
 
-🗓️ **Data:** ${dataRelatorio}
+🗓️ Data: ${dataRelatorio}
 
-📍 **Tribo de Judá**
-📍 **Líder:** Mônica 
+📍 Tribo de Judá
+📍 Líder: Mônica 
 
-📍 **Qt. total:** ${totalGeralTodosHorarios}
+📍 Qt. total: ${totalGeralTodosHorarios}
 
 - Qt. de novos: ${totalNovosGeral}
 - Qt. de afastados: ${totalAfastadosGeral}
