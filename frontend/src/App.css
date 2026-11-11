@@ -42,7 +42,7 @@ header p {
   margin-bottom: 25px;
 }
 
-/* Grid mantido rigorosamente em 2 colunas */
+/* Grid rigorosamente em 2 colunas */
 .grid-firmes {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -50,37 +50,58 @@ header p {
   margin-bottom: 25px;
 }
 
-/* Redução das caixas (cards) dos jovens */
+/* Força os cards a alinharem absolutamente tudo à esquerda */
 .grid-firmes > div {
   width: 100%;
   box-sizing: border-box;
   min-width: 0;
-  padding: 8px 10px; /* Reduzido para ficar mais compacto */
+  padding: 8px 10px;
   background: #112c1f;
   border-radius: 6px;
   border: 1px solid #1e4a35;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start !important; /* Joga tudo para a esquerda */
+  text-align: left !important;
 }
 
-/* Redução do nome e observação do jovem */
+/* Garante que o nome e categoria fiquem alinhados à esquerda */
+.grid-firmes > div > div {
+  width: 100%;
+  text-align: left !important;
+}
+
 .grid-firmes strong {
-  font-size: 0.95rem !important; /* Nome do jovem levemente menor */
+  font-size: 0.95rem !important;
+  display: block;
+  text-align: left;
 }
 
 .grid-firmes small {
   font-size: 0.75rem !important;
+  display: block;
+  text-align: left;
 }
 
-/* Redução dos labels e checkboxes */
+/* Alinha os labels de checkbox perfeitamente à esquerda sem quebrar */
 .grid-firmes label {
-  font-size: 11px !important; /* Texto menor para não quebrar */
-  gap: 5px;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  width: 100% !important;
+  font-size: 11.5px !important;
+  white-space: nowrap !important; /* Impede a quebra de linha na marra */
+  gap: 6px;
   cursor: pointer;
+  margin-top: 4px;
 }
 
 .grid-firmes input[type="checkbox"] {
-  width: 13px !important;  /* Checkbox menor */
+  width: 13px !important;
   height: 13px !important;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .tab-button {
