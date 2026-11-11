@@ -42,6 +42,7 @@ header p {
   margin-bottom: 25px;
 }
 
+/* Grid mantido rigorosamente em 2 colunas */
 .grid-firmes {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -49,29 +50,36 @@ header p {
   margin-bottom: 25px;
 }
 
+/* Redução das caixas (cards) dos jovens */
 .grid-firmes > div {
   width: 100%;
   box-sizing: border-box;
   min-width: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; /* Joga tudo para a esquerda */
-  text-align: left;        /* Alinha o texto à esquerda */
-  padding: 10px;
+  padding: 8px 10px; /* Reduzido para ficar mais compacto */
   background: #112c1f;
   border-radius: 6px;
   border: 1px solid #1e4a35;
 }
 
+/* Redução do nome e observação do jovem */
+.grid-firmes strong {
+  font-size: 0.95rem !important; /* Nome do jovem levemente menor */
+}
+
+.grid-firmes small {
+  font-size: 0.75rem !important;
+}
+
+/* Redução dos labels e checkboxes */
 .grid-firmes label {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  text-align: left;
-  width: 100%;
-  font-size: 12px; /* Letra levemente ajustada para caber "Reunião Principal" perfeitamente */
-  white-space: nowrap; /* Evita quebra de linha indesejada */
-  gap: 6px;
+  font-size: 11px !important; /* Texto menor para não quebrar */
+  gap: 5px;
+  cursor: pointer;
+}
+
+.grid-firmes input[type="checkbox"] {
+  width: 13px !important;  /* Checkbox menor */
+  height: 13px !important;
   cursor: pointer;
 }
 
