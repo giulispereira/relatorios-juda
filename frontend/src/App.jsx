@@ -154,9 +154,10 @@ export default function App() {
   const totalAfastadosPresenca = Object.entries(presencas).filter(([, dados]) => dados.status === 'Afastado').length;
   const totalRetornando = Object.entries(presencas).filter(([, dados]) => dados.status === 'Retornando').length;
   
+  // CORREÇÃO APLICADA AQUI: Só soma nos firmes se o status do não-firme for estritamente 'Firme'
   const totalFirmesExtra = Object.entries(presencas).filter(([id, dados]) => {
     const j = jovens.find(item => item.id === parseInt(id));
-    return j && naoFirmes.some(nf => nf.id === j.id) && (dados.status === 'Firme' || dados.horario);
+    return j && naoFirmes.some(nf => nf.id === j.id) && dados.status === 'Firme';
   }).length;
 
   const totalFirmesGeral = totalFirmes + totalFirmesExtra;
@@ -206,7 +207,7 @@ Tribo de Judá
 📲 **Qt. de mensagens/ligações:** ${mensagensLigacoes}
 🪣 **Qt. de jovens na limpeza:** ${jovensLimpeza}
 🧹 **Qt. de produtos de limpeza trazidos na semana:** ${produtosLimpeza}
-🎞️ **Qt. de folhas de ofício trazidas na semana:** ${folhasOficio}`
+🎞️ **Qt. de folhas ofício trazidas na semana:** ${folhasOficio}`
       );
     }
     if (tipoDia === 'QUARTA') {
@@ -385,39 +386,36 @@ Total de jovens em todos os horários: ${totalNovosGeral + totalAfastadosGeral +
             {firmes.map((j) => {
               const dadosJovem = presencas[j.id] || {};
               return (
-                <div key={j.id} style={{ background: '#112c1f', padding: '12px', borderRadius: '6px', border: '1px solid #1e4a35', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <div key={j.id}>
                   <div>
-                    <strong style={{ fontSize: '1.1rem', color: '#e2b044' }}>{j.nome}</strong>
-                    <small style={{ color: '#a0aeco', display: 'block' }}>{j.notas || j.categoria}</small>
+                    <strong style={{ fontSize: '0.95rem', color: '#e2b044', display: 'block' }}>{j.nome}</strong>
+                    <small style={{ color: '#a0aec0', display: 'block', fontSize: '0.75rem' }}>{j.notas || j.categoria}</small>
                   </div>
                   {temMultiplosHorarios ? (
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                      <label style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginTop: '6px', width: '100%' }}>
+                      <label>
                         <input
                           type="checkbox"
                           checked={dadosJovem.horario === 'Principal'}
                           onChange={() => handleTogglePresenca(j.id, 'horario', 'Principal')}
-                          style={{ width: '16px', height: '16px', accentColor: '#d4a338' }}
                         />
                         Reunião Principal
                       </label>
-                      <label style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px' }}>
+                      <label>
                         <input
                           type="checkbox"
                           checked={dadosJovem.horario === 'Outro'}
                           onChange={() => handleTogglePresenca(j.id, 'horario', 'Outro')}
-                          style={{ width: '16px', height: '16px', accentColor: '#d4a338' }}
                         />
                         Outro
                       </label>
                     </div>
                   ) : (
-                    <label style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px' }}>
+                    <label style={{ marginTop: '6px' }}>
                       <input
                         type="checkbox"
                         checked={dadosJovem.status === 'Presente'}
                         onChange={() => handleTogglePresenca(j.id, 'status', 'Presente')}
-                        style={{ width: '16px', height: '16px', accentColor: '#d4a338' }}
                       />
                       Presente
                     </label>
@@ -550,7 +548,7 @@ Total de jovens em todos os horários: ${totalNovosGeral + totalAfastadosGeral +
           <h3>Lista de Jovens Cadastrados ({jovens.length})</h3>
           <ul style={{ paddingLeft: '20px', color: '#e2e8f0' }}>
             {jovens.map((j) => (
-              <li key={j.id} style={{ marginBottom: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#112c1f', padding: '8px 12px', borderRadius: '6px', border: '1px solid #1e4a35' }}>
+              <li key={j.id} style={{ marginBottom: '10px', display: 'flex', justifyContent: 'space-linejoin', alignItems: 'center', background: '#112c1f', padding: '8px 12px', borderRadius: '6px', border: '1px solid #1e4a35' }}>
                 <span>
                   <strong style={{ color: '#e2b044' }}>{j.nome}</strong> 
                   <em> ({j.categoria})</em> {j.telefone ? `- ${j.telefone}` : ''} 
