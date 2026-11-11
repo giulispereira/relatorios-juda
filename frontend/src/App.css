@@ -43,7 +43,7 @@ header p {
 }
 .grid-firmes {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr); /* Força exatamente 2 colunas */
   gap: 12px;
   margin-bottom: 25px;
 }
