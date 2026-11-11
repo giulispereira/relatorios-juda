@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Montserrat:wght@400;600;700&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #0b2217 0%, #133827 50%, #07160f 100%);
+  color: #f0f4f8;
+  font-family: 'Montserrat', sans-serif;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, .brand-title {
+  font-family: 'Cinzel', serif;
+  color: #e2b044;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+}
+
+header {
+  padding: 20px 15px;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+header p {
+  font-size: 0.95rem;
+}
+
+.main-card {
+  background: rgba(11, 34, 23, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid #d4a338;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5), inset 0 0 15px rgba(212, 163, 56, 0.15);
+  padding: 20px;
+  margin-bottom: 25px;
+}
+.grid-firmes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+@media (max-width: 600px) {
+  .grid-firmes {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tab-button {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  padding: 12px 20px;
+  border-radius: 6px;
+  border: 1px solid #c89528;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #112c1f;
+  color: #c89528;
+}
+
+.tab-button.active {
+  background: linear-gradient(180deg, #e5b850 0%, #b8861e 100%);
+  color: #07160f;
+  box-shadow: 0 0 12px rgba(226, 176, 68, 0.4);
+}
+
+.btn-status {
+  border: 1px solid #c89528;
+  border-radius: 5px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-weight: bold;
+  font-family: 'Montserrat', sans-serif;
+  transition: all 0.2s ease;
+}
+
+.btn-status-inactive {
+  background: #112c1f;
+  color: #a0aec0;
+  border-color: #2a4365;
+}
+
+.btn-status-afastado {
+  background: #d69e2e;
+  color: #1a202c;
+}
+
+.btn-status-retornando {
+  background: #2f855a;
+  color: #ffffff;
+}
+
+input, select, textarea {
+  background: #07160f;
+  color: #f0f4f8;
+  border: 1px solid #b8861e;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-family: 'Montserrat', sans-serif;
+  outline: none;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #f3c660;
+  box-shadow: 0 0 8px rgba(243, 198, 96, 0.5);
+}
+
+.whatsapp-box {
+  background: #07160f;
+  border: 1px solid #c89528;
+  border-radius: 8px;
+  padding: 15px;
+  color: #e2e8f0;
+  font-family: monospace;
+  font-size: 14px;
+}
+
+.toast-notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  left: 20px;
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+  background: linear-gradient(135deg, #e5b850 0%, #b8861e 100%);
+  color: #07160f;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+  border: 1px solid #fff;
+  z-index: 1000;
+}
