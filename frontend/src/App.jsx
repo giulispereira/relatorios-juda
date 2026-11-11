@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 
-const API_URL = 'http://localhost:5000';
+const API_URL = 'https://relatorios-juda.onrender.com';
 
 export default function App() {
   const [jovens, setJovens] = useState([]);
