@@ -41,10 +41,11 @@ header p {
   padding: 20px;
   margin-bottom: 25px;
 }
+
 .grid-firmes {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 10px;
+  grid-template-columns: 1fr 1fr; /* Força rigorosamente 2 colunas em qualquer tela */
+  gap: 8px;
   margin-bottom: 25px;
 }
 
@@ -52,12 +53,7 @@ header p {
 .grid-firmes > div {
   width: 100%;
   box-sizing: border-box;
-}
-
-@media (max-width: 600px) {
-  .grid-firmes {
-    grid-template-columns: 1fr;
-  }
+  min-width: 0; /* Impede que textos compridos estraguem o grid */
 }
 
 .tab-button {
