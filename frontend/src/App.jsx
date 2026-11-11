@@ -137,33 +137,82 @@ export default function App() {
     return n.includes('ana paula') || n.includes('mônica') || n.includes('monica');
   };
 
+  const temMultiplosHorarios = tipoDia === 'QUARTA' || tipoDia === 'DOMINGO';
+
+  // --- CONTAGENS SEPARADAS POR HORÁRIO (Principal vs Outro) ---
   const obreirasSelecionadasCount = firmes.filter(j => {
     if (!isObreiraEspecial(j.nome)) return false;
     const dados = presencas[j.id] || {};
+    if (temMultiplosHorarios) {
+      return dados.horario === 'Principal';
+    }
     return Boolean(dados.status || dados.horario);
   }).length;
 
-  const totalFirmes = Object.entries(presencas).filter(([id, dados]) => {
+  const totalFirmesPrincipal = Object.entries(presencas).filter(([id, dados]) => {
     const j = jovens.find(item => item.id === parseInt(id));
     if (!j || !firmes.some(f => f.id === j.id)) return false;
     if (isObreiraEspecial(j.nome)) return false;
+    if (temMultiplosHorarios) {
+      return dados.horario === 'Principal';
+    }
     return Boolean(dados.status || dados.horario);
   }).length;
 
-  const totalNovosPresenca = Object.entries(presencas).filter(([, dados]) => dados.status === 'Novo').length;
-  const totalAfastadosPresenca = Object.entries(presencas).filter(([, dados]) => dados.status === 'Afastado').length;
-  const totalRetornando = Object.entries(presencas).filter(([, dados]) => dados.status === 'Retornando').length;
-  
-  // CORREÇÃO APLICADA AQUI: Só soma nos firmes se o status do não-firme for estritamente 'Firme'
-  const totalFirmesExtra = Object.entries(presencas).filter(([id, dados]) => {
+  const totalNovosPrincipal = Object.entries(presencas).filter(([id, dados]) => {
     const j = jovens.find(item => item.id === parseInt(id));
-    return j && naoFirmes.some(nf => nf.id === j.id) && dados.status === 'Firme';
+    if (!j || !naoFirmes.some(nf => nf.id === j.id)) return false;
+    if (dados.status !== 'Novo') return false;
+    if (temMultiplosHorarios) {
+      return dados.horario === 'Principal';
+    }
+    return true;
   }).length;
 
-  const totalFirmesGeral = totalFirmes + totalFirmesExtra;
-  const totalNovosGeral = totalNovosPresenca;
-  const totalAfastadosGeral = totalAfastadosPresenca;
+  const totalAfastadosPrincipal = Object.entries(presencas).filter(([id, dados]) => {
+    const j = jovens.find(item => item.id === parseInt(id));
+    if (!j || !naoFirmes.some(nf => nf.id === j.id)) return false;
+    if (dados.status !== 'Afastado') return false;
+    if (temMultiplosHorarios) {
+      return dados.horario === 'Principal';
+    }
+    return true;
+  }).length;
+
+  const totalRetornandoPrincipal = Object.entries(presencas).filter(([id, dados]) => {
+    const j = jovens.find(item => item.id === parseInt(id));
+    if (!j || !naoFirmes.some(nf => nf.id === j.id)) return false;
+    if (dados.status !== 'Retornando') return false;
+    if (temMultiplosHorarios) {
+      return dados.horario === 'Principal';
+    }
+    return true;
+  }).length;
+
+  const totalFirmesExtraPrincipal = Object.entries(presencas).filter(([id, dados]) => {
+    const j = jovens.find(item => item.id === parseInt(id));
+    if (!j || !naoFirmes.some(nf => nf.id === j.id)) return false;
+    if (dados.status !== 'Firme') return false;
+    if (temMultiplosHorarios) {
+      return dados.horario === 'Principal';
+    }
+    return true;
+  }).length;
+
+  const totalFirmesGeralPrincipal = totalFirmesPrincipal + totalFirmesExtraPrincipal;
+
+  // Totais para a Reunião Principal
+  const totalNovosGeral = totalNovosPrincipal;
+  const totalAfastadosGeral = totalAfastadosPrincipal;
+  const totalFirmesGeral = totalFirmesGeralPrincipal;
   const qtdObreirosTotal = obreirasSelecionadasCount;
+
+  // Total de jovens em TODOS os horários (inclui quem foi em 'Outro')
+  const totalGeralTodosHorarios = Object.entries(presencas).filter(([, dados]) => {
+    return Boolean(dados.status || dados.horario);
+  }).length;
+
+  const totalRetornando = Object.entries(presencas).filter(([, dados]) => dados.status === 'Retornando').length;
   const totalTribo = totalNovosGeral + totalAfastadosGeral + totalRetornando + totalFirmesGeral + qtdObreirosTotal;
 
   const gerarTextoRelatorio = () => {
@@ -180,7 +229,7 @@ Tribo de Judá
 🤍 **Qt de Obr:** ${qtdObreirosTotal}
 ✅ **Qt total:** ${totalNovosGeral + totalAfastadosGeral + totalFirmesGeral + qtdObreirosTotal}
 
-🌐 **Qtde total o dia todo:** ${totalNovosGeral + totalAfastadosGeral + totalFirmesGeral + qtdObreirosTotal}
+🌐 **Qtde total o dia todo:** ${totalGeralTodosHorarios}
 
 - Alguém se batizou nas águas? ${batismoAguas}
 - Alguém foi batizado no Espírito Santo? ${batismoEspirito}
@@ -200,7 +249,7 @@ Tribo de Judá
 ▫️ **Obreiros:** ${qtdObreirosTotal}
 ▫️ **Ab. Interna:** ${abordagemInterna}
 ▫️ **Ab. Externa:** ${abordagemExterna}
-▫️ **Total da tribo:** ${totalTribo}
+▫️ **Total da tribo:** ${totalGeralTodosHorarios}
 
 🔰 **Visitas da semana:** ${visitasSemana}
 🗣️ **A tribo realizou evg?** ${realizouEvg}
@@ -224,7 +273,7 @@ Qt de jovens na reunião das 19h
 - Jovens Afastados: ${totalAfastadosGeral}
 - Jovens firmes: ${totalFirmesGeral}
 Total: ${totalNovosGeral + totalAfastadosGeral + totalFirmesGeral}
-Total de jovens em todos os horários: ${totalNovosGeral + totalAfastadosGeral + totalFirmesGeral}`
+Total de jovens em todos os horários: ${totalGeralTodosHorarios}`
       );
     }
     if (tipoDia === 'SEGUNDA') {
@@ -236,7 +285,7 @@ Total de jovens em todos os horários: ${totalNovosGeral + totalAfastadosGeral +
 📍 **Tribo de Judá**
 📍 **Líder:** Mônica 
 
-📍 **Qt. total:** ${totalNovosGeral + totalFirmesGeral}
+📍 **Qt. total:** ${totalGeralTodosHorarios}
 
 - Qt. de novos: ${totalNovosGeral}
 - Qt. de afastados: ${totalAfastadosGeral}
@@ -251,8 +300,6 @@ Total de jovens em todos os horários: ${totalNovosGeral + totalAfastadosGeral +
       mostrarAviso('Relatório copiado! Pronto para o WhatsApp.');
     }).catch(err => console.error('Erro ao copiar:', err));
   };
-
-  const temMultiplosHorarios = tipoDia === 'QUARTA' || tipoDia === 'DOMINGO';
 
   return (
     <div className="notranslate" translate="no" style={{ padding: '15px', maxWidth: '850px', margin: '0 auto' }}>
@@ -548,7 +595,7 @@ Total de jovens em todos os horários: ${totalNovosGeral + totalAfastadosGeral +
           <h3>Lista de Jovens Cadastrados ({jovens.length})</h3>
           <ul style={{ paddingLeft: '20px', color: '#e2e8f0' }}>
             {jovens.map((j) => (
-              <li key={j.id} style={{ marginBottom: '10px', display: 'flex', justifyContent: 'space-linejoin', alignItems: 'center', background: '#112c1f', padding: '8px 12px', borderRadius: '6px', border: '1px solid #1e4a35' }}>
+              <li key={j.id} style={{ marginBottom: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#112c1f', padding: '8px 12px', borderRadius: '6px', border: '1px solid #1e4a35' }}>
                 <span>
                   <strong style={{ color: '#e2b044' }}>{j.nome}</strong> 
                   <em> ({j.categoria})</em> {j.telefone ? `- ${j.telefone}` : ''} 
